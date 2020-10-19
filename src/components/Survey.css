@@ -4,19 +4,21 @@ body {
   justify-content: center;
   min-height: 100vh;
   font-family: "Lato", sans-serif;
-  background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(26, 178, 255,1));
+  background-color: #bbdefb;
 }
 
 .survey-container {
-    background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(26, 178, 255,1));
+ 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  
 }
 
 .survey-question {
+  
   display: flex;
   width: 38rem;
   background: #fff;
@@ -24,12 +26,22 @@ body {
   border-radius: 1rem;
   margin-left: 10px;
   margin-right: 10px;
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+}
+
+.survey-question ul {
+    list-style-type: none;
+}
+.survey-question ul li {
+    background-color:#e3f2fd ;
+    margin-bottom: 0.8rem;
+    padding: 0.6rem;
+    cursor: pointer;
 }
 
 h2{
     color:rgb(26, 178, 255);
+   
 }
 
 label > input[type="radio"] {
@@ -42,12 +54,12 @@ label > input[type="radio"] + *::before {
     vertical-align: bottom;
     width: 1rem;
     height: 1rem;
-    margin-bottom: 3px;
     margin-right: 0.5rem;
     border-radius: 50%;
     border-style: solid;
     border-width: 0.1rem;
     border-color: rgb(26, 178, 255);
+    
   }
 
   label > input[type="radio"]:checked + *::before {
@@ -66,6 +78,11 @@ label > input[type="radio"] + *::before {
   margin-bottom: 10px;
 }
 
+.survey-button{
+    display: flex;
+    justify-content: flex-end;
+}
+
 button {
   margin-left: 50px;
   border: none;
@@ -74,13 +91,11 @@ button {
   margin-right: 3px;
   padding: 8px;
   border-radius: 5px;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 button:hover {
   border: none;
-  outline: none;
-  background-color: transparent;
-  color:rgb(26, 178, 255);
-  font-size: 17.5px;
   cursor: pointer;
 }

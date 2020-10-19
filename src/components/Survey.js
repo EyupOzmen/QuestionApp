@@ -27,7 +27,7 @@ const Survey = () => {
       <form onSubmit={handleSubmit}>
       <h2>{question.Questions[0].Question}</h2>
       
-      <ul style={{listStyleType:"none"}} >
+      <ul>
         <li>
           <label>
             <input
@@ -76,8 +76,9 @@ const Survey = () => {
           </label>
         </li>
       </ul>
-
+      <div className="survey-button" >
       <button type="submit">Cevapla</button>
+      </div>
     </form>
       </div>
       <br/>
