@@ -1,0 +1,33 @@
+{
+    "HeaderLogo": "https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+    "FooterLogo": "https://cloud4feed.com/index/wp-content/uploads/2016/03/c4f_logo.png",
+    "Questions": [
+        {
+            "ID": 1,
+            "QuestionType": "MULTISINGLE",
+            "Question": "Hangi takımı tutuyorsunuz?",
+            "Options": [
+                {
+                    "ID": 1,
+                    "Order": 1,
+                    "Text": "Fenerbahçe"
+                },
+                {
+                    "ID": 2,
+                    "Order": 2,
+                    "Text": "Galatasaray"
+                },
+                {
+                    "ID": 3,
+                    "Order": 3,
+                    "Text": "Beşiktaş"
+                },
+                {
+                    "ID": 4,
+                    "Order": 4,
+                    "Text": "Trabzonspor"
+                }
+            ]
+        }
+    ]
+}
