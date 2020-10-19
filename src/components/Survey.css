@@ -20,13 +20,18 @@ body {
 .survey-question {
   
   display: flex;
-  width: 38rem;
+  width: 100%;
   background: #fff;
   padding: 3rem 0 3rem 5rem;
   border-radius: 1rem;
-  margin-left: 10px;
-  margin-right: 10px;
   justify-content: flex-start;
+ 
+}
+
+.survey-question form{
+    
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .survey-question ul {
@@ -81,6 +86,8 @@ label > input[type="radio"] + *::before {
 .survey-button{
     display: flex;
     justify-content: flex-end;
+    margin-top:1.5rem;
+   
 }
 
 button {
