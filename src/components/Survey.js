@@ -25,7 +25,7 @@ const Survey = () => {
       <div className="survey-question">
       
       <form onSubmit={handleSubmit}>
-      <h2>{question.Questions[0].Question}</h2>
+      <h3>{question.Questions[0].Question}</h3>
       
       <ul>
         <li>
