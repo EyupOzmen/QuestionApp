@@ -20,7 +20,7 @@ body {
 .survey-question {
   
   display: flex;
-  width: 100%;
+  width: 95%;
   background: #fff;
   padding: 3rem 0 3rem 5rem;
   border-radius: 1rem;
@@ -29,13 +29,15 @@ body {
 }
 
 .survey-question form{
-    
+    width: 100%;
     flex-direction: column;
-    justify-content: flex-start;
+    margin-left: -3rem;
 }
+
 
 .survey-question ul {
     list-style-type: none;
+    margin-left: -2.6rem;
 }
 .survey-question ul li {
     background-color:#e3f2fd ;
