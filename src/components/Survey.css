@@ -109,7 +109,12 @@ button {
 } */
 .btn{
   margin-top: 0.4rem;
+  border-width: 0.5rem;
+  background-color: #03a9f4;
+ 
 }
 .btn:hover{
-
+  background-color: #03a9f4;
+  color: white;
+  
 }

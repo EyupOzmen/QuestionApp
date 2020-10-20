@@ -28,7 +28,13 @@ const Survey = ({ header, survey, optionsArr, footer }) => {
       <Row>
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Col style={{color:'#03a9f4', marginTop: "1.2rem", fontWeight: "bold" }}>
+            <Col
+              style={{
+                color: "#03a9f4",
+                marginTop: "1.2rem",
+                fontWeight: "bold",
+              }}
+            >
               <label>{survey}</label>
             </Col>
           </Row>
@@ -41,8 +47,9 @@ const Survey = ({ header, survey, optionsArr, footer }) => {
                   style={{
                     background: "#03a9f4",
                     color: "white",
-                    padding: "0.2rem",
-                    marginBottom: "0.5rem",
+                    padding: "0.4rem",
+                    marginBottom: "0.6rem",
+                    borderRadius: "0.5rem",
                   }}
                 >
                   <Form.Check
@@ -58,9 +65,25 @@ const Survey = ({ header, survey, optionsArr, footer }) => {
             );
           })}
 
+          <style type="text/css">
+            {`
+    .btn-flat {
+      background-color: #03a9f4;
+      color: white;
+      border-width:0.001rem;
+    }
+    .btn-flat:hover {
+      color:#03a9f4 ;
+      background-color:white;
+      border-width:0.001rem;
+      border-color:#03a9f4 ;
+    }
+    `}
+          </style>
+
           <Row>
             <Col>
-              <Button className="btn" variant="outline-primary" size="md" block type="submit">
+              <Button variant="flat" size="md" block type="submit">
                 Cevapla
               </Button>
             </Col>
