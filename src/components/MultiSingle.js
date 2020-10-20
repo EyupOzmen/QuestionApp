@@ -59,8 +59,8 @@ const Survey = ({ header, survey, optionsArr, footer }) => {
           })}
 
           <Row>
-            <Col sm={{ span: 3, offset: 7 }}>
-              <Button className="btn" style={{background:'#03a9f4'}} type="submit">
+            <Col>
+              <Button className="btn" variant="outline-primary" size="md" block type="submit">
                 Cevapla
               </Button>
             </Col>
