@@ -40,7 +40,7 @@ const Survey = () => {
             <Row>
               <Col>
               <Form.Check
-                style={{background:"black",color:'white',padding:'0.4rem',marginBottom:'0.3rem'}}
+                style={{background:"black",color:'white',padding:'0.2rem',marginBottom:'0.5rem'}}
                 type="radio"
                 value={question.Questions[0].Options[0].Text}
                 checked={selected === question.Questions[0].Options[0].Text}
@@ -52,7 +52,7 @@ const Survey = () => {
             <Row>
               <Col>
               <Form.Check
-                style={{background:"black",color:'white',padding:'0.4rem',marginBottom:'0.3rem'}}
+                style={{background:"black",color:'white',padding:'0.2rem',marginBottom:'0.5rem'}}
                 type="radio"
                 value={question.Questions[0].Options[1].Text}
                 checked={selected === question.Questions[0].Options[1].Text}
@@ -64,7 +64,7 @@ const Survey = () => {
             <Row>
               <Col>
               <Form.Check
-                style={{background:"black",color:'white',padding:'0.4rem',marginBottom:'0.3rem'}}
+                style={{background:"black",color:'white',padding:'0.2rem',marginBottom:'0.5rem'}}
                 type="radio"
                 value={question.Questions[0].Options[2].Text}
                 checked={selected === question.Questions[0].Options[2].Text}
@@ -76,7 +76,7 @@ const Survey = () => {
             <Row>
               <Col>
               <Form.Check
-                 style={{background:"black",color:'white',padding:'0.4rem',marginBottom:'0.3rem'}}
+                 style={{background:"black",color:'white',padding:'0.2rem',marginBottom:'0.5rem'}}
                 type="radio"
                 value={question.Questions[0].Options[3].Text}
                 checked={selected === question.Questions[0].Options[3].Text}
