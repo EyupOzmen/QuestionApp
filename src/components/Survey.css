@@ -7,7 +7,7 @@ body {
   background-color: #bbdefb;
 }
 
-.survey-container {
+/* .survey-container {
  
   display: flex;
   flex-direction: column;
@@ -76,19 +76,20 @@ label > input[type="radio"] + *::before {
   }
   label > input[type="radio"]:checked + * {
     color:rgb(26, 178, 255);
-  }
+  } */
 
-.survey-header img {
+.survey-header{
   width: 180px;
 }
 
-.survey-footer img{
+.survey-footer {
   width: 150px;
+  margin-top:1.2rem;
   margin-bottom: 2rem;
   
 }
 
-.survey-button{
+/* .survey-button{
     display: flex;
     justify-content: flex-end;
     margin-top:1.5rem;
@@ -105,9 +106,10 @@ button {
   border-radius: 5px;
   align-items: flex-end;
   justify-content: flex-end;
+} */
+.btn{
+  margin-top: 0.4rem;
 }
+.btn:hover{
 
-button:hover {
-  border: none;
-  cursor: pointer;
 }

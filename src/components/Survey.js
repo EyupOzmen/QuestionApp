@@ -19,10 +19,12 @@ const Survey = () => {
   };
 
   return (
+
+    
     <Container>
       <Row>
         <Col>
-          <img src={question.HeaderLogo} alt="Header Logo" />
+          <img className="survey-header"  src={question.HeaderLogo} alt="Header Logo" />
         </Col>
       </Row>
 
@@ -30,60 +32,84 @@ const Survey = () => {
         <Form onSubmit={handleSubmit} >
           
             <Row>
-              <label>{question.Questions[0].Question}</label>
+             <Col style={{marginTop:'1.2rem',fontWeight:'bold'}} >
+             <label>{question.Questions[0].Question}</label>
+             </Col>
             </Row>
             <br />
             <Row>
+              <Col>
               <Form.Check
+                style={{background:"black",color:'white',padding:'0.4rem',marginBottom:'0.3rem'}}
                 type="radio"
                 value={question.Questions[0].Options[0].Text}
                 checked={selected === question.Questions[0].Options[0].Text}
                 onChange={handleChange}
                 label={question.Questions[0].Options[0].Text}
               />
+              </Col>
             </Row>
             <Row>
+              <Col>
               <Form.Check
+                style={{background:"black",color:'white',padding:'0.4rem',marginBottom:'0.3rem'}}
                 type="radio"
                 value={question.Questions[0].Options[1].Text}
                 checked={selected === question.Questions[0].Options[1].Text}
                 onChange={handleChange}
                 label={question.Questions[0].Options[1].Text}
               />
+              </Col>
             </Row>
             <Row>
+              <Col>
               <Form.Check
+                style={{background:"black",color:'white',padding:'0.4rem',marginBottom:'0.3rem'}}
                 type="radio"
                 value={question.Questions[0].Options[2].Text}
                 checked={selected === question.Questions[0].Options[2].Text}
                 onChange={handleChange}
                 label={question.Questions[0].Options[2].Text}
               />
+              </Col>
             </Row>
             <Row>
+              <Col>
               <Form.Check
+                 style={{background:"black",color:'white',padding:'0.4rem',marginBottom:'0.3rem'}}
                 type="radio"
                 value={question.Questions[0].Options[3].Text}
                 checked={selected === question.Questions[0].Options[3].Text}
                 onChange={handleChange}
                 label={question.Questions[0].Options[3].Text}
               />
+              </Col>
             </Row>
-            <Button variant="primary" type="submit">
+            <Row>
+              <Col sm={{ span: 3, offset:6 }}>
+            <Button className="btn" type="submit">
               Cevapla
             </Button>
+            </Col>
+            </Row>
+          
+            
           
         </Form>
       </Row >
 
       <Row>
         <Col>
-          <img src={question.FooterLogo} alt="Header Logo" />
+          <img className="survey-footer" src={question.FooterLogo} alt="Header Logo" />
         </Col>
       </Row>
     </Container>
+  );
+};
 
-    //   <div className="survey-container">
+export default Survey;
+
+ //   <div className="survey-container">
     //     <div className="survey-header">
     //       <img src={question.HeaderLogo} alt="Header Logo" />
     //     </div>
@@ -152,7 +178,3 @@ const Survey = () => {
     //       <img src={question.FooterLogo} alt="Header Logo" />
     //     </div>
     //   </div>
-  );
-};
-
-export default Survey;
