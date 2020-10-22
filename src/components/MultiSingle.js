@@ -78,7 +78,7 @@ const MultiSingle = ({  survey, optionsArr}) => {
 
           <Row>
             <Col>
-              <Button variant="flat" size="md"  type="submit">
+              <Button variant="flat" size="md" block  type="submit">
                 Cevapla
               </Button>
             </Col>

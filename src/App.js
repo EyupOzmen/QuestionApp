@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
+import "./components/Survey.css";
 
 import question from "./data/question.json";
 import MultiSingle from "./components/MultiSingle";
@@ -12,15 +13,16 @@ const App = () => {
     <Container>
       <Row>
         <Col>
-          <img src={question[0].HeaderLogo} alt="Header Logo" />
+          <img src={question.HeaderLogo} alt="Header Logo" />
         </Col>
       </Row>
       {selected === 0 ? (
         <Row>
           <Col>
             <MultiSingle
-              survey={question[0].Questions[0].Question}
-              optionsArr={question[0].Questions[0].Options}
+              
+              survey={question.Questions[0].Question}
+              optionsArr={question.Questions[0].Options}
             />
           </Col>
         </Row>
@@ -29,48 +31,75 @@ const App = () => {
         <Row>
           <Col>
             <MultiMulti
-              survey={question[1].Questions[0].Question}
-              optionsArr={question[1].Questions[0].Options}
+            
+              survey={question.Questions[1].Question}
+              optionsArr={question.Questions[1].Options}
+            />
+          </Col>
+        </Row>
+      ) : null}
+      {selected === 2 ? (
+        <Row>
+          <Col>
+            <MultiMulti
+              
+              survey={question.Questions[2].Question}
+              optionsArr={question.Questions[2].Options}
             />
           </Col>
         </Row>
       ) : null}
 
-      <style type="text/css">
-        {`
-    .btn-flat {
-      background-color: #03a9f4;
-      color: white;
-      border-width:0.001rem;
-    }
-    .btn-flat:hover {
-      color:#03a9f4 ;
-      background-color:white;
-      border-width:0.001rem;
-      border-color:#03a9f4 ;
-    }
-    `}
-      </style>
-      {selected === question.length ? (
+      {selected === question.Questions.length ? (
         <p>Tebrikler</p>
       ) : (
         <Row>
-          <Col>
-            <Button
-              onClick={() => setSelected(selected + 1)}
-              variant="flat"
-              size="md"
-              type="submit"
-            >
-              Geç
-            </Button>
-          </Col>
+          {selected === 0 ? null : (
+            <Col>
+              <Button
+                onClick={() => setSelected(selected - 1)}
+                variant="flat"
+                size="md"
+                type="submit"
+                
+              >
+                Geri
+              </Button>
+            </Col>
+          )}
+          {selected === question.Questions.length - 1 ? (
+               <Col>
+               <Button
+                 className="mb-3"
+                 onClick={() => setSelected(selected+1)}
+                 variant="flat"
+                 size="md"
+                 type="submit"
+               >
+                 Bitir
+               </Button>
+             </Col>
+
+          ) : (
+            <Col>
+              <Button
+                className="mb-3"
+                onClick={() => setSelected(selected + 1)}
+                variant="flat"
+                size="md"
+                type="submit"
+              >
+                İleri
+              </Button>
+            </Col>
+          )}
+          
         </Row>
       )}
 
       <Row>
         <Col>
-          <img src={question[0].FooterLogo} alt="Footer Logo" />
+          <img src={question.FooterLogo} alt="Footer Logo" />
         </Col>
       </Row>
     </Container>

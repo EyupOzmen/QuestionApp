@@ -118,3 +118,14 @@ button {
   color: white;
   
 }
+.btn-flat {
+background-color: #03a9f4;
+color: white;
+border-width:0.001rem;
+}
+.btn-flat:hover {
+color:#03a9f4 ;
+background-color:white;
+border-width:0.001rem;
+border-color:#03a9f4 ;
+}

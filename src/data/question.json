@@ -1,4 +1,4 @@
-[
+
 {
     "HeaderLogo": "https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
     "FooterLogo": "https://cloud4feed.com/index/wp-content/uploads/2016/03/c4f_logo.png",
@@ -7,6 +7,7 @@
             "ID": 1,
             "QuestionType": "MULTISINGLE",
             "Question": "Hangi takımı tutuyorsunuz?",
+            "isRequired":true,
             "Options": [
                 {
                     "ID": 1,
@@ -29,17 +30,13 @@
                     "Text": "Trabzonspor"
                 }
             ]
-        }
-    ]
-},
-{
-    "HeaderLogo": "https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-    "FooterLogo": "https://cloud4feed.com/index/wp-content/uploads/2016/03/c4f_logo.png",
-    "Questions": [
+
+        },
         {
-            "ID": 1,
+            "ID": 2,
             "QuestionType": "MULTIMULTI",
             "Question": "Sevdiğiniz spor dallarını seçiniz.",
+            "isRequired":true,
             "Options": [
                 {
                     "ID": 1,
@@ -66,7 +63,39 @@
                     "isChecked":false
                 }
             ]
+        },
+        {
+            "ID": 3,
+            "QuestionType": "MULTIMULTI",
+            "Question": "Gezdiğiniz illeri seçiniz.",
+            "isRequired":true,
+            "Options": [
+                {
+                    "ID": 1,
+                    "Order": 1,
+                    "Text": "Tokat",
+                    "isChecked":false
+                },
+                {
+                    "ID": 2,
+                    "Order": 2,
+                    "Text": "Mersin",
+                    "isChecked":false
+                },
+                {
+                    "ID": 3,
+                    "Order": 3,
+                    "Text": "Adana",
+                    "isChecked":false
+                },
+                {
+                    "ID": 4,
+                    "Order": 4,
+                    "Text": "İstanbul",
+                    "isChecked":false
+                }
+            ]
         }
+    
     ]
 }
-]
