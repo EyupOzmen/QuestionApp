@@ -3,18 +3,23 @@ import "./Survey.css";
 import Form from "react-bootstrap/Form";
 import { Col, Container, Row, Button } from "react-bootstrap";
 
-const MultiSingle = ({  survey, optionsArr}) => {
-  const [selected, setSelected] = useState("");
 
-  const handleChange = (event) => {
-    setSelected(event.target.value);
-  };
+const MultiMulti = ({  survey, optionsArr }) => {
+  const [checkboxes,setCheckboxes] = useState(optionsArr)
+
+ 
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    alert(`Tuttuğunuz takım: ${selected}`);
-    setSelected(null);
+    console.log(checkboxes)
+    
+    // let check = checkboxes;
+
+    // check.map((box) => {
+    //   return  box.isChecked=false;
+    // });
+    // setCheckboxes(check);
   };
 
   return (
@@ -48,11 +53,10 @@ const MultiSingle = ({  survey, optionsArr}) => {
                   }}
                 >
                   <Form.Check
-                    style={{}}
-                    type="radio"
-                    value={item.Text}
-                    checked={selected === item.Text}
-                    onChange={handleChange}
+                    type="checkbox"
+                    name={item.Text}
+                    checked={checkboxes[item.Text]}
+                    onChange={(e) => item.isChecked = !item.isChecked}
                     label={item.Text}
                   />
                 </Col>
@@ -91,5 +95,4 @@ const MultiSingle = ({  survey, optionsArr}) => {
   );
 };
 
-export default MultiSingle;
-
+export default MultiMulti;
