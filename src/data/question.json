@@ -2,6 +2,8 @@
 {
     "HeaderLogo": "https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
     "FooterLogo": "https://cloud4feed.com/index/wp-content/uploads/2016/03/c4f_logo.png",
+    "WelcomeText":"Hoş Geldiniz :)",
+    "FareWellText":"Güle Güle",
     "Questions": [
         {
             "ID": 1,

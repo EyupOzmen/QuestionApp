@@ -12,7 +12,7 @@ const MultiMulti = ({  survey, optionsArr }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(checkboxes)
+    // console.log(checkboxes)
     
     // let check = checkboxes;
 

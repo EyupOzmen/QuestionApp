@@ -48,7 +48,7 @@ const MultiSingle = ({  survey, optionsArr}) => {
                   }}
                 >
                   <Form.Check
-                    style={{}}
+                  
                     type="radio"
                     value={item.Text}
                     checked={selected === item.Text}
