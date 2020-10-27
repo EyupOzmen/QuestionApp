@@ -6,12 +6,14 @@ import Survey from "./models/Survey";
 import QuestionView from "./components/QuestionView";
 
 import SurveyJSONData from "./data/question.json";
-import MultiSingle from "./components/MultiSingle";
-import MultiMulti from "./components/MultiMulti";
+//import MultiSingle from "./components/MultiSingle";
+//import MultiMulti from "./components/MultiMulti";
 import WelcomeView from "./components/WelcomeView";
 import FarewellView from "./components/FarewellView";
 
-const App = () => {
+import {connect} from 'react-redux';
+
+const App = ({options}) => {
  
   const [survey, setSurvey] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState({});
@@ -19,13 +21,13 @@ const App = () => {
   const [backButtonVisibled, setBackButtonVisibled] = useState(false);
   const [nextButtonVisibled, setNextButtonVisibled] = useState(true);
   const [viewType, setViewType] = useState(0);
-  const [answers,setAnswers] = useState([]);
-  const [checked,setChecked] = useState(false)
+  const [answerList,setAnswerList] = useState([]);
+
 
   useEffect(() => {
     let data = new Survey(SurveyJSONData);
     setSurvey(data);
-
+    setAnswerList(options)
     // setSurvey(survey => ([...survey, ...data]));
   }, []);
 
@@ -57,25 +59,21 @@ const App = () => {
         setBackButtonVisibled(true);
         setCurrentIndex(currentIndex + 1);
         setViewType(1);
+        setAnswerList(options);
+       
       } else {
         // Uğurlama iletisini (FarewallView) göster.
         setViewType(2);
         setBackButtonVisibled(false);
         setNextButtonVisibled(false);
+        setAnswerList(options);
       }
     } else {
       setViewType(1);
     }
   };
 
-  // const handleChange = (e) => {
-  //   if(currentQuestion && currentQuestion.QuestionType === "MULTISINGLE"){
-  //     setAnswers(...answers,answers[currentIndex]=e.target.value)
-  //     console.log(answers[currentIndex])
-  //     setChecked(e.target.key)
-  //     //currentQuestion.Options.some(item =>item.Text===answers[currentIndex])
-  //   }
-  // }
+  console.log(answerList);
 
   // const validate = () => {
   //   if(viewType === 1){
@@ -142,7 +140,14 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    options:state
+  }
+}
+
+export default connect(mapStateToProps)(App);
 
 /*const fetchData = () => {
       let data = new Survey(question);

@@ -3,57 +3,62 @@ import { Row, Col, Form } from "react-bootstrap";
 
 import Answer from "../models/Answer";
 
+import {store} from '../store';
+import {sendAnswers} from '../actions';
+
+
 const QuestionView = ({ id, question }) => {
   const [answers, setAnswers] = useState([]);
 
   const checkAnswerRadio = (e) => {
     //console.log(e.target.value);
     //console.log(e.target.id);
-    const {name, value, id } = e.target;
-    let item = { ID:`${name}${value}`, Value: value, Text: id };
+    const { name, value, id } = e.target;
+    let item = { ID: `${name}${value}`, Value: value, Text: id };
     let answer = new Answer(item);
     var list = [answer];
     setAnswers(list);
+    store.dispatch(sendAnswers(list));
   };
 
   const checkAnswerBox = (e) => {
     console.log(e.target.value);
     console.log(e.target.id);
     let isChecked = e.target.checked;
-    const {name, value, id } = e.target;
+    const { name, value, id } = e.target;
     let item = { ID: `${name}${value}`, Value: value, Text: id };
     let answer = new Answer(item);
     console.log(answer);
     console.log(isChecked);
-    if(isChecked){
+    if (isChecked) {
       let newArr = [...answers];
       newArr.push(answer);
       setAnswers(newArr);
-    }else{
-      let index = findIndex(answers,answer)
+      store.dispatch(sendAnswers(newArr));
+    } else {
+      let index = findIndex(answers, answer);
       console.log(index);
-      let newArr = deleteItem(answers,answers[index]);
-      console.log(newArr); 
+      let newArr = deleteItem(answers, answers[index]);
+      console.log(newArr);
       setAnswers(newArr);
+      store.dispatch(sendAnswers(newArr));
     }
-    
-         
   };
   console.log(answers);
 
-  const findIndex = (arr,item) => {
-    for (let i = 0 ; i < arr.length ; i++){
-      if(arr[i].ID === item.ID ){
+  const findIndex = (arr, item) => {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].ID === item.ID) {
         return i;
       }
     }
-  }
+  };
 
-  const deleteItem = (arr,item) => {
-    let newArr = arr.filter( arrItem => arrItem !== item);
+  const deleteItem = (arr, item) => {
+    let newArr = arr.filter((arrItem) => arrItem !== item);
 
     return newArr;
-  }
+  };
 
   return (
     <div id={id}>
@@ -67,7 +72,7 @@ const QuestionView = ({ id, question }) => {
         <div>
           {question.Options.map((item) => {
             return (
-              <Row>
+              <Row key={item.ID} >
                 <Col>
                   <Form.Check
                     id={item.Text}
@@ -90,10 +95,9 @@ const QuestionView = ({ id, question }) => {
         <div>
           {question.Options.map((item) => {
             return (
-              <Row>
+              <Row  key={item.ID} >
                 <Col>
                   <Form.Check
-                    
                     type="radio"
                     id={item.Text}
                     key={`${question.ID} ${item.ID}`}
@@ -111,5 +115,7 @@ const QuestionView = ({ id, question }) => {
     </div>
   );
 };
+
+
 
 export default QuestionView;
