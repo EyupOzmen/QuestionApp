@@ -12,38 +12,21 @@ import WelcomeView from "./components/WelcomeView";
 import FarewellView from "./components/FarewellView";
 
 const App = () => {
-  const [selected, setSelected] = useState(0);
+ 
   const [survey, setSurvey] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [backButtonVisibled, setBackButtonVisibled] = useState(false);
   const [nextButtonVisibled, setNextButtonVisibled] = useState(true);
   const [viewType, setViewType] = useState(0);
+  const [answers,setAnswers] = useState([]);
+  const [checked,setChecked] = useState(false)
 
   useEffect(() => {
-    /*const fetchData = () => {
-      let data = new Survey(question);
-      console.log(data);
-      //const data = JSON.parse(question);
-      setSurvey(data);
-      {survey && setCurrentQuestion(survey.Questions[0])}
-    };
-    // let data = new Survey(question);
-    // setSurvey((state) => ({ ...state, survey: data }));
-    fetchData();
-    // setCurrentQuestion((state) => ({
-    //   ...state,
-    //   currentQuestion: survey.Questions[0],
-    // }));*/
-
     let data = new Survey(SurveyJSONData);
     setSurvey(data);
-    // setSurvey(survey => ([...survey, ...data]));
 
-    //The function you pass the hook cannot be an async function,
-    //useState hook is also asynchronous, and will not be reflected immediately.
-    // Effects are always executed after the render phase is completed even if you setState inside the one effect,
-    // another effect will read the updated state and take action on it only after the render phase.
+    // setSurvey(survey => ([...survey, ...data]));
   }, []);
 
   useEffect(() => {
@@ -85,6 +68,21 @@ const App = () => {
     }
   };
 
+  // const handleChange = (e) => {
+  //   if(currentQuestion && currentQuestion.QuestionType === "MULTISINGLE"){
+  //     setAnswers(...answers,answers[currentIndex]=e.target.value)
+  //     console.log(answers[currentIndex])
+  //     setChecked(e.target.key)
+  //     //currentQuestion.Options.some(item =>item.Text===answers[currentIndex])
+  //   }
+  // }
+
+  // const validate = () => {
+  //   if(viewType === 1){
+
+  //   }
+  // }
+
   return (
     <Container>
       <Row>
@@ -97,7 +95,9 @@ const App = () => {
       <Row>
         <Col>
           {viewType === 0 && <WelcomeView welcomeText={survey.WelcomeText} />}
-          {viewType === 1 && <QuestionView question={currentQuestion} />}
+          {viewType === 1 && (
+            <QuestionView id={currentIndex} question={currentQuestion} />
+          )}
           {viewType === 2 && (
             <FarewellView farewellText={survey.FareWellText} />
           )}
@@ -138,8 +138,34 @@ const App = () => {
           <img src={survey.FooterLogo} alt="Footer" />
         </Col>
       </Row>
+    </Container>
+  );
+};
 
-      {/* <Row>
+export default App;
+
+/*const fetchData = () => {
+      let data = new Survey(question);
+      console.log(data);
+      //const data = JSON.parse(question);
+      setSurvey(data);
+      {survey && setCurrentQuestion(survey.Questions[0])}
+    };
+    // let data = new Survey(question);
+    // setSurvey((state) => ({ ...state, survey: data }));
+    fetchData();
+    // setCurrentQuestion((state) => ({
+    //   ...state,
+    //   currentQuestion: survey.Questions[0],
+    // }));*/
+
+//The function you pass the hook cannot be an async function,
+//useState hook is also asynchronous, and will not be reflected immediately.
+// Effects are always executed after the render phase is completed even if you setState inside the one effect,
+// another effect will read the updated state and take action on it only after the render phase.
+
+{
+  /* <Row>
         <Col>
           <img src={question.HeaderLogo} alt="Header Logo" />
         </Col>
@@ -229,9 +255,5 @@ const App = () => {
         <Col>
           <img src={question.FooterLogo} alt="Footer Logo" />
         </Col>
-      </Row> */}
-    </Container>
-  );
-};
-
-export default App;
+      </Row> */
+}
