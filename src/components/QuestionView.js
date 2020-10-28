@@ -3,14 +3,19 @@ import { Row, Col, Form } from "react-bootstrap";
 
 import Answer from "../models/Answer";
 
-import {store} from '../store';
-import {sendAnswers} from '../actions';
+import { store } from "../store";
+import { sendAnswers } from "../actions";
+import {validateRequired} from '../actions';
+import { connect } from "react-redux";
+
+import {findIndex,deleteItem} from '../utils';
 
 
 const QuestionView = ({ id, question }) => {
   const [answers, setAnswers] = useState([]);
 
   const checkAnswerRadio = (e) => {
+    store.dispatch(validateRequired(false))
     //console.log(e.target.value);
     //console.log(e.target.id);
     const { name, value, id } = e.target;
@@ -18,10 +23,14 @@ const QuestionView = ({ id, question }) => {
     let answer = new Answer(item);
     var list = [answer];
     setAnswers(list);
+    if(list.length === 0){
+      store.dispatch(validateRequired(true))
+    }
     store.dispatch(sendAnswers(list));
   };
 
   const checkAnswerBox = (e) => {
+    store.dispatch(validateRequired(false))
     console.log(e.target.value);
     console.log(e.target.id);
     let isChecked = e.target.checked;
@@ -46,19 +55,7 @@ const QuestionView = ({ id, question }) => {
   };
   console.log(answers);
 
-  const findIndex = (arr, item) => {
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i].ID === item.ID) {
-        return i;
-      }
-    }
-  };
-
-  const deleteItem = (arr, item) => {
-    let newArr = arr.filter((arrItem) => arrItem !== item);
-
-    return newArr;
-  };
+ 
 
   return (
     <div id={id}>
@@ -72,7 +69,7 @@ const QuestionView = ({ id, question }) => {
         <div>
           {question.Options.map((item) => {
             return (
-              <Row key={item.ID} >
+              <Row key={item.ID}>
                 <Col>
                   <Form.Check
                     id={item.Text}
@@ -95,7 +92,7 @@ const QuestionView = ({ id, question }) => {
         <div>
           {question.Options.map((item) => {
             return (
-              <Row  key={item.ID} >
+              <Row key={item.ID}>
                 <Col>
                   <Form.Check
                     type="radio"
@@ -116,6 +113,11 @@ const QuestionView = ({ id, question }) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    disableFlag:state.disableRequired
+  };
+};
 
-
-export default QuestionView;
+export default connect(mapStateToProps) (QuestionView);

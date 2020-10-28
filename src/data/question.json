@@ -97,6 +97,35 @@
                     "isChecked":false
                 }
             ]
+        },
+        {
+            "ID": 4,
+            "QuestionType": "MULTISINGLE",
+            "Question": "İstanbul semti değildir?",
+            "isRequired":true,
+            "Options": [
+                {
+                    "ID": 1,
+                    "Order": 1,
+                    "Text": "Eyüp"
+                },
+                {
+                    "ID": 2,
+                    "Order": 2,
+                    "Text": "Levent"
+                },
+                {
+                    "ID": 3,
+                    "Order": 3,
+                    "Text": "Fatih"
+                },
+                {
+                    "ID": 4,
+                    "Order": 4,
+                    "Text": "Mamak"
+                }
+            ]
+
         }
     
     ]

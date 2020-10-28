@@ -4,3 +4,10 @@ export function sendAnswers (options){
         payload:options
     }
 };
+
+export function validateRequired(ableNext){
+    return{
+        type:"IS_REQUIRED",
+        payload:ableNext
+    }
+}

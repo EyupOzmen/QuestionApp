@@ -6,29 +6,31 @@ import Survey from "./models/Survey";
 import QuestionView from "./components/QuestionView";
 
 import SurveyJSONData from "./data/question.json";
-//import MultiSingle from "./components/MultiSingle";
-//import MultiMulti from "./components/MultiMulti";
 import WelcomeView from "./components/WelcomeView";
 import FarewellView from "./components/FarewellView";
 
-import {connect} from 'react-redux';
+import {store} from './store';
+import {validateRequired} from './actions';
+import { connect } from "react-redux";
+import {validation} from './utils';
 
-const App = ({options}) => {
- 
+const App = ({ options,disableFlag }) => {
+  const [surveyLength, setSurveyLength] = useState(0);
   const [survey, setSurvey] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [backButtonVisibled, setBackButtonVisibled] = useState(false);
   const [nextButtonVisibled, setNextButtonVisibled] = useState(true);
   const [viewType, setViewType] = useState(0);
-  const [answerList,setAnswerList] = useState([]);
-
+  const [answerList, setAnswerList] = useState([]);
+  
 
   useEffect(() => {
     let data = new Survey(SurveyJSONData);
     setSurvey(data);
-    setAnswerList(options)
-    // setSurvey(survey => ([...survey, ...data]));
+    setSurveyLength(data.Questions.length);
+    setAnswerList(options);
+    
   }, []);
 
   useEffect(() => {
@@ -44,6 +46,7 @@ const App = ({options}) => {
     }
   }, [currentIndex]);
 
+  //Controls back button
   const backQuestion = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
@@ -53,14 +56,32 @@ const App = ({options}) => {
     }
   };
 
+  //Contorls next button
   const nextQuestion = () => {
     if (viewType === 1) {
-      if (currentIndex < survey.Questions.length - 1) {
-        setBackButtonVisibled(true);
-        setCurrentIndex(currentIndex + 1);
-        setViewType(1);
-        setAnswerList(options);
-       
+      console.log(currentIndex);
+      if (currentIndex < survey.Questions.length-1) {
+        if (options.length !== 0) {
+          if (currentQuestion.isRequired) {
+            const nextAble = validation(options,currentIndex);
+            store.dispatch(validateRequired(!nextAble));
+            console.log(nextAble)
+            if (nextAble) {
+              setBackButtonVisibled(true);
+              setCurrentIndex(currentIndex + 1);
+              setViewType(1);
+              setAnswerList(options);
+            } else {
+              store.dispatch(validateRequired(true))
+            }
+          }
+        } else {
+          store.dispatch(validateRequired(true))
+          setBackButtonVisibled(true);
+          setCurrentIndex(currentIndex + 1);
+          setViewType(1);
+          setAnswerList(options);
+        }
       } else {
         // Uğurlama iletisini (FarewallView) göster.
         setViewType(2);
@@ -70,16 +91,15 @@ const App = ({options}) => {
       }
     } else {
       setViewType(1);
+  
+     
+     
     }
   };
 
   console.log(answerList);
 
-  // const validate = () => {
-  //   if(viewType === 1){
 
-  //   }
-  // }
 
   return (
     <Container>
@@ -101,6 +121,13 @@ const App = ({options}) => {
           )}
         </Col>
       </Row>
+     
+        <Row>
+          <Col style={{marginTop:"1rem",display:"flex",alignItems:"center" ,justifyContent:"center"}} >
+            {disableFlag ? <p style={{ color: "red" }}>The question is required!</p>:<p style={{color:"blue"}} >Sizi dinliyoruz.</p>}
+          </Col>
+        </Row>
+     
 
       <Row>
         <Col>
@@ -124,8 +151,11 @@ const App = ({options}) => {
               variant="secondary"
               size="sm"
               onClick={nextQuestion}
+              disabled={disableFlag}
             >
-              İleri
+              {surveyLength && surveyLength - 1 === currentIndex
+                ? "Bitir"
+                : "İleri"}
             </Button>
           )}
         </Col>
@@ -143,122 +173,17 @@ const App = ({options}) => {
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    options:state
-  }
-}
+    options: state.answers,
+    disableFlag:state.disableRequired
+  };
+};
 
 export default connect(mapStateToProps)(App);
 
-/*const fetchData = () => {
-      let data = new Survey(question);
-      console.log(data);
-      //const data = JSON.parse(question);
-      setSurvey(data);
-      {survey && setCurrentQuestion(survey.Questions[0])}
-    };
-    // let data = new Survey(question);
-    // setSurvey((state) => ({ ...state, survey: data }));
-    fetchData();
-    // setCurrentQuestion((state) => ({
-    //   ...state,
-    //   currentQuestion: survey.Questions[0],
-    // }));*/
+
 
 //The function you pass the hook cannot be an async function,
 //useState hook is also asynchronous, and will not be reflected immediately.
 // Effects are always executed after the render phase is completed even if you setState inside the one effect,
 // another effect will read the updated state and take action on it only after the render phase.
 
-{
-  /* <Row>
-        <Col>
-          <img src={question.HeaderLogo} alt="Header Logo" />
-        </Col>
-      </Row>
-      {selected === 0 ? (
-        <Row>
-          <Col>
-            <MultiSingle
-              
-              survey={question.Questions[0].Question}
-              optionsArr={question.Questions[0].Options}
-            />
-          </Col>
-        </Row>
-      ) : null}
-      {selected === 1 ? (
-        <Row>
-          <Col>
-            <MultiMulti
-            
-              survey={question.Questions[1].Question}
-              optionsArr={question.Questions[1].Options}
-            />
-          </Col>
-        </Row>
-      ) : null}
-      {selected === 2 ? (
-        <Row>
-          <Col>
-            <MultiMulti
-              
-              survey={question.Questions[2].Question}
-              optionsArr={question.Questions[2].Options}
-            />
-          </Col>
-        </Row>
-      ) : null}
-
-      {selected === question.Questions.length ? (
-        <p>Tebrikler</p>
-      ) : (
-        <Row>
-          {selected === 0 ? null : (
-            <Col>
-              <Button
-                onClick={() => setSelected(selected - 1)}
-                variant="flat"
-                size="md"
-                type="submit"
-                
-              >
-                Geri
-              </Button>
-            </Col>
-          )}
-          {selected === question.Questions.length - 1 ? (
-               <Col>
-               <Button
-                 className="mb-3"
-                 onClick={() => setSelected(selected+1)}
-                 variant="flat"
-                 size="md"
-                 type="submit"
-               >
-                 Bitir
-               </Button>
-             </Col>
-
-          ) : (
-            <Col>
-              <Button
-                className="mb-3"
-                onClick={() => setSelected(selected + 1)}
-                variant="flat"
-                size="md"
-                type="submit"
-              >
-                İleri
-              </Button>
-            </Col>
-          )}
-          
-        </Row>
-      )}
-
-      <Row>
-        <Col>
-          <img src={question.FooterLogo} alt="Footer Logo" />
-        </Col>
-      </Row> */
-}
