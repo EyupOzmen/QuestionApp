@@ -59,7 +59,7 @@ const App = ({ options, disableFlag }) => {
       if (counter === 1 && options.length === 0) {
         setEntrance(true);
         console.log(entrance);
-      } else if (counter === 6 && options.length !== 4) {
+      } else if (currentIndex === survey.length-1 && options.length !== 4) {
         setEntrance(true);
         console.log(entrance);
       } else {

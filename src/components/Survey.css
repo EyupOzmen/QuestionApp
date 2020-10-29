@@ -23,11 +23,13 @@
   width: 180px;
   height: 60px;
   align-self: center;
+  margin-bottom: 60px;
 }
 .Footer_Logo{
   width: 70px;
   height: 12px;
   align-self: center;
+  margin-top: 40px;
 }
 .App__question {
   margin-right:15px;
