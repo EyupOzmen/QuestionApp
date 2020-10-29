@@ -1,11 +1,4 @@
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  font-family: "Lato", sans-serif;
-  background-color: #bbdefb;
-}
+
 .App {
   min-height: 100%;
   display: flex;
@@ -20,6 +13,7 @@ body {
   );
  
 }
+
 .Header_Logo{
   display: flex;
   justify-content: center;
@@ -37,18 +31,22 @@ body {
 .App__question {
   margin-right:15px;
   margin-top: 20px;
-  width: 300px;
-  height: 150px;
+  width: 80%;
+  height: 50%;
   background: #fff;
   color: rgba(0, 0, 0, 0.47);
   font-size: 15px;
   font-weight:bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ 
   border-radius: 11px;
   
   box-shadow: 0 10px 5px 5px rgba(0, 0, 0, 0.02);
+}
+
+h3{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* .App__question:after {
   content: "";
@@ -134,16 +132,7 @@ label > input[type="radio"] + *::before {
     color:rgb(26, 178, 255);
   } */
 
-.survey-header{
-  width: 180px;
-}
 
-.survey-footer {
-  width: 150px;
-  margin-top:1.2rem;
-  margin-bottom: 2rem;
-  
-}
 
 /* .survey-button{
     display: flex;
@@ -163,25 +152,5 @@ button {
   align-items: flex-end;
   justify-content: flex-end;
 } */
-.btn{
-  margin-top: 0.4rem;
-  border-width: 0.5rem;
-  background-color: #03a9f4;
- 
-}
-.btn:hover{
-  background-color: #03a9f4;
-  color: white;
-  
-}
-.btn-flat {
-background-color: #03a9f4;
-color: white;
-border-width:0.001rem;
-}
-.btn-flat:hover {
-color:#03a9f4 ;
-background-color:white;
-border-width:0.001rem;
-border-color:#03a9f4 ;
-}
+
+

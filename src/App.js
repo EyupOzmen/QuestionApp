@@ -132,11 +132,11 @@ const App = ({ options, disableFlag }) => {
       <Row className="App__question">
         <Col >
           {viewType === 0 && <WelcomeView welcomeText={survey.WelcomeText} />}
-          <div >
+          
             {viewType === 1 && (
               <QuestionView id={currentIndex} question={currentQuestion} />
             )}
-          </div>
+         
 
           {viewType === 2 && (
             <FarewellView farewellText={survey.FareWellText} />
