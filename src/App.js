@@ -9,12 +9,12 @@ import SurveyJSONData from "./data/question.json";
 import WelcomeView from "./components/WelcomeView";
 import FarewellView from "./components/FarewellView";
 
-import {store} from './store';
-import {validateRequired} from './actions';
+import { store } from "./store";
+import { validateRequired } from "./actions";
 import { connect } from "react-redux";
-import {validation} from './utils';
+import { validation } from "./utils";
 
-const App = ({ options,disableFlag }) => {
+const App = ({ options, disableFlag }) => {
   const [surveyLength, setSurveyLength] = useState(0);
   const [survey, setSurvey] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState({});
@@ -23,15 +23,19 @@ const App = ({ options,disableFlag }) => {
   const [nextButtonVisibled, setNextButtonVisibled] = useState(true);
   const [viewType, setViewType] = useState(0);
   const [answerList, setAnswerList] = useState([]);
-  
+  const [counter, setCounter] = useState(0);
+  const [entrance, setEntrance] = useState(false);
 
   useEffect(() => {
     let data = new Survey(SurveyJSONData);
     setSurvey(data);
     setSurveyLength(data.Questions.length);
     setAnswerList(options);
-    
   }, []);
+
+  useEffect(() => {
+    setEntrance(false);
+  }, [options]);
 
   useEffect(() => {
     if (survey.Questions) {
@@ -46,6 +50,26 @@ const App = ({ options,disableFlag }) => {
     }
   }, [currentIndex]);
 
+  useEffect(() => {
+    setEntrance(false);
+    console.log("Enter validate");
+    console.log(options);
+    console.log(counter);
+    const entranceValidate = () => {
+      if (counter === 1 && options.length === 0) {
+        setEntrance(true);
+        console.log(entrance);
+      } else if (counter === 6 && options.length !== 4) {
+        setEntrance(true);
+        console.log(entrance);
+      } else {
+        setEntrance(false);
+      }
+    };
+
+    entranceValidate();
+  }, [counter]);
+
   //Controls back button
   const backQuestion = () => {
     if (currentIndex > 0) {
@@ -58,25 +82,26 @@ const App = ({ options,disableFlag }) => {
 
   //Contorls next button
   const nextQuestion = () => {
+    setCounter(counter + 1);
     if (viewType === 1) {
       console.log(currentIndex);
-      if (currentIndex < survey.Questions.length-1) {
+      if (currentIndex < survey.Questions.length - 1) {
         if (options.length !== 0) {
           if (currentQuestion.isRequired) {
-            const nextAble = validation(options,currentIndex);
+            const nextAble = validation(options, currentIndex);
             store.dispatch(validateRequired(!nextAble));
-            console.log(nextAble)
+            console.log(nextAble);
             if (nextAble) {
               setBackButtonVisibled(true);
               setCurrentIndex(currentIndex + 1);
               setViewType(1);
               setAnswerList(options);
             } else {
-              store.dispatch(validateRequired(true))
+              store.dispatch(validateRequired(true));
             }
           }
         } else {
-          store.dispatch(validateRequired(true))
+          store.dispatch(validateRequired(true));
           setBackButtonVisibled(true);
           setCurrentIndex(currentIndex + 1);
           setViewType(1);
@@ -91,43 +116,50 @@ const App = ({ options,disableFlag }) => {
       }
     } else {
       setViewType(1);
-  
-     
-     
     }
   };
 
   console.log(answerList);
 
-
-
   return (
-    <Container>
+    <Container className="App">
       <Row>
         <Col>
-          <span>{currentIndex}</span>
-          <img src={survey.HeaderLogo} alt="Header" />
+          <img className="Header_Logo" src={survey.HeaderLogo} alt="Header" />
         </Col>
       </Row>
 
-      <Row>
-        <Col>
+      <Row className="App__question">
+        <Col >
           {viewType === 0 && <WelcomeView welcomeText={survey.WelcomeText} />}
-          {viewType === 1 && (
-            <QuestionView id={currentIndex} question={currentQuestion} />
-          )}
+          <div >
+            {viewType === 1 && (
+              <QuestionView id={currentIndex} question={currentQuestion} />
+            )}
+          </div>
+
           {viewType === 2 && (
             <FarewellView farewellText={survey.FareWellText} />
           )}
         </Col>
       </Row>
-     
-        <Row>
-          <Col style={{marginTop:"1rem",display:"flex",alignItems:"center" ,justifyContent:"center"}} >
-            {disableFlag ? <p style={{ color: "red" }}>The question is required!</p>:<p style={{color:"blue"}} >Sizi dinliyoruz.</p>}
-          </Col>
-        </Row>
-     
+
+      <Row>
+        <Col
+          style={{
+            marginTop: "1rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {disableFlag ? (
+            <p style={{ color: "red" }}>Bu soru zorunludur!</p>
+          ) : (
+            <p style={{ color: "blue" }}>Sizi dinliyoruz.</p>
+          )}
+        </Col>
+      </Row>
 
       <Row>
         <Col>
@@ -151,7 +183,7 @@ const App = ({ options,disableFlag }) => {
               variant="secondary"
               size="sm"
               onClick={nextQuestion}
-              disabled={disableFlag}
+              disabled={disableFlag || entrance}
             >
               {surveyLength && surveyLength - 1 === currentIndex
                 ? "Bitir"
@@ -163,7 +195,7 @@ const App = ({ options,disableFlag }) => {
 
       <Row>
         <Col>
-          <img src={survey.FooterLogo} alt="Footer" />
+          <img className="Footer_Logo" src={survey.FooterLogo} alt="Footer" />
         </Col>
       </Row>
     </Container>
@@ -174,16 +206,13 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     options: state.answers,
-    disableFlag:state.disableRequired
+    disableFlag: state.disableRequired,
   };
 };
 
 export default connect(mapStateToProps)(App);
 
-
-
 //The function you pass the hook cannot be an async function,
 //useState hook is also asynchronous, and will not be reflected immediately.
 // Effects are always executed after the render phase is completed even if you setState inside the one effect,
 // another effect will read the updated state and take action on it only after the render phase.
-

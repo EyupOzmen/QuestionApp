@@ -70,7 +70,7 @@ const QuestionView = ({ id, question }) => {
           {question.Options.map((item) => {
             return (
               <Row key={item.ID}>
-                <Col>
+                <Col style={{width:"60px",marginBottom:"5px"}} >
                   <Form.Check
                     id={item.Text}
                     key={`${question.ID} ${item.ID}`}
