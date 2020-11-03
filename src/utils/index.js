@@ -13,8 +13,10 @@ export const deleteItem = (arr, item) => {
   };
 
 export  const validation = (options,currentIndex) => {
-   
+    console.log('Validate');
+    
     if(options.length !==0){
+      console.log('Entered if')
       let validatedID = options[options.length - 1][options.length - 1].ID.toString().substring(
         0,
         options[options.length - 1][options.length - 1].ID.length-1
@@ -26,6 +28,9 @@ export  const validation = (options,currentIndex) => {
       } else {
         return false;
       }
+    }else{
+      console.log('Entered else')
+      return false;
     }
-    return false;
+    
   };

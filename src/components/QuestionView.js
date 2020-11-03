@@ -4,58 +4,90 @@ import { Row, Col, Form } from "react-bootstrap";
 import Answer from "../models/Answer";
 
 import { store } from "../store";
-import { sendAnswers } from "../actions";
-import {validateRequired} from '../actions';
+import { sendAnswers, validateRequired } from "../actions";
 import { connect } from "react-redux";
 
-import {findIndex,deleteItem} from '../utils';
+import { findIndex, deleteItem } from "../utils";
 
-
-const QuestionView = ({ id, question }) => {
+const QuestionView = ({ id, question, isRequired }) => {
   const [answers, setAnswers] = useState([]);
 
   const checkAnswerRadio = (e) => {
-    store.dispatch(validateRequired(false))
-    //console.log(e.target.value);
-    //console.log(e.target.id);
+    console.log('a');
+    store.dispatch(validateRequired(false));
+
+    //Alınan değer ile yeni answer oluşturuldu.
     const { name, value, id } = e.target;
     let item = { ID: `${name}${value}`, Value: value, Text: id };
     let answer = new Answer(item);
-    var list = [answer];
+    let list = [...answers, answer];
     setAnswers(list);
-    if(list.length === 0){
-      store.dispatch(validateRequired(true))
+    //state ile sorguluyoruz.
+    if (isRequired) {
+      console.log('b');
+      if (list.length === 0) {
+        //Geçişi engeliyoruz cevap yoksa.
+        store.dispatch(validateRequired(true));
+      } else {
+        //Cevabı gönderiyoruz.
+        store.dispatch(sendAnswers(list));
+      }
+    } else {
+      //Cevabı gönderiyoruz.
+      store.dispatch(sendAnswers(list));
     }
-    store.dispatch(sendAnswers(list));
+    console.log('c');
   };
 
   const checkAnswerBox = (e) => {
-    store.dispatch(validateRequired(false))
-    console.log(e.target.value);
-    console.log(e.target.id);
+    
+    store.dispatch(validateRequired(false));
+
+    //Alınan değerler ile cevap oluşturuldu.
     let isChecked = e.target.checked;
     const { name, value, id } = e.target;
     let item = { ID: `${name}${value}`, Value: value, Text: id };
     let answer = new Answer(item);
-    console.log(answer);
-    console.log(isChecked);
+
+    //Check edip edilmeme durumuna göre cevaplar güncelleniyor.
     if (isChecked) {
       let newArr = [...answers];
-      newArr.push(answer);
+      newArr = [...answers, answer];
       setAnswers(newArr);
-      store.dispatch(sendAnswers(newArr));
+
+      if (isRequired) {
+        if (newArr.length === 0) {
+          //Geçişi engeliyoruz cevap yoksa.
+          store.dispatch(validateRequired(true));
+        } else {
+          //Cevabı gönderiyoruz.
+          store.dispatch(sendAnswers(newArr));
+        }
+      } else {
+        //Cevabı gönderiyoruz.
+        store.dispatch(sendAnswers(newArr));
+      }
     } else {
       let index = findIndex(answers, answer);
-      console.log(index);
+
       let newArr = deleteItem(answers, answers[index]);
-      console.log(newArr);
+
       setAnswers(newArr);
-      store.dispatch(sendAnswers(newArr));
+
+      if (isRequired) {
+        if (newArr.length === 0) {
+          //Geçişi engeliyoruz cevap yoksa.
+          store.dispatch(validateRequired(true));
+        } else {
+          //Cevabı gönderiyoruz.
+          store.dispatch(sendAnswers(newArr));
+        }
+      } else {
+        //Cevabı gönderiyoruz.
+        store.dispatch(sendAnswers(newArr));
+      }
     }
   };
-  console.log(answers);
-
- 
 
   return (
     <div id={id}>
@@ -70,7 +102,7 @@ const QuestionView = ({ id, question }) => {
           {question.Options.map((item) => {
             return (
               <Row key={item.ID}>
-                <Col style={{width:"60px",marginBottom:"5px"}} >
+                <Col style={{ width: "60px", marginBottom: "5px" }}>
                   <Form.Check
                     id={item.Text}
                     key={`${question.ID} ${item.ID}`}
@@ -84,8 +116,6 @@ const QuestionView = ({ id, question }) => {
               </Row>
             );
           })}
-          {/* {console.log(question.ID)}
-          {console.log("Checkbox")} */}
         </div>
       )}
       {question.QuestionType === "MULTISINGLE" && (
@@ -114,10 +144,12 @@ const QuestionView = ({ id, question }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
-    disableFlag:state.disableRequired
+    isRequired: state.isQRequired,
   };
 };
 
-export default connect(mapStateToProps) (QuestionView);
+export default connect(mapStateToProps, {
+  validateRequired,
+  sendAnswers,
+})(QuestionView);

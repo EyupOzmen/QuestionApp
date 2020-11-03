@@ -9,6 +9,11 @@ export default (state={},action) => {
             return{
                 ...state,
                 disableRequired:action.payload
+            }
+        case "IS_QUESTION_REQUIRED":
+            return{
+                ...state,
+                isQRequired:action.payload
             }    
     
         default:

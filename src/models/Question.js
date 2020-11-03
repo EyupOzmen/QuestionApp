@@ -2,7 +2,7 @@ export default class Question{
     ID;
     QuestionType;
     Question;
-    IsRequired;
+    isRequired;
     Options=[];
 
     constructor(data){
