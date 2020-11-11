@@ -10,7 +10,7 @@ import WelcomeView from "./components/WelcomeView";
 import FarewellView from "./components/FarewellView";
 
 import { store } from "./store";
-import { validateRequired,isQuestionRequired } from "./actions";
+import { validateRequired, isQuestionRequired } from "./actions";
 import { connect } from "react-redux";
 import { validation } from "./utils";
 
@@ -36,58 +36,55 @@ const App = ({ options, disableFlag }) => {
   //Giriş ekranı
   const [entrance, setEntrance] = useState(false);
   //Güncel cevap
-  const [currentAnswer,setCurrentAnswer] = useState([]);
+  const [currentAnswer, setCurrentAnswer] = useState([]);
 
   //Dataları dışarıdan topluyoruz.
   useEffect(() => {
     let data = new Survey(SurveyJSONData);
     setSurvey(data);
     setSurveyLength(data.Questions.length);
-    
   }, []);
-  
+
   //Option değiştiğinde cevap listesi oluşturuyoruz.
-  useEffect(() =>{
+  useEffect(() => {
     /*DİKKAT*/
     // setEntrance(false);
     setAnswerList([options]);
-  },[options])
+  }, [options]);
 
   //Index değiştiğinde ilgili soruyu current soruya geçiyorum.
   useEffect(() => {
     if (survey.Questions) {
-      console.log('current');
+      console.log("current");
       setCurrentQuestion(survey.Questions[currentIndex]);
     }
-   
   }, [survey]);
 
   // useEffect(() => {
   //   console.log('currentQ');
   //   if (survey.Questions) {
-      
+
   //     setCurrentQuestion(survey.Questions[currentIndex]);
   //   }
   // }, []);
 
-  
   useEffect(() => {
     if (survey.Questions) {
       setCurrentQuestion(survey.Questions[currentIndex]);
     }
     console.log(currentIndex);
-    if(currentIndex < surveyLength && viewType === 1){
-      if(currentQuestion.isRequired){
-        store.dispatch(isQuestionRequired(true))
+    if (currentIndex < surveyLength && viewType === 1) {
+      if (currentQuestion.isRequired) {
+        store.dispatch(isQuestionRequired(true));
         store.dispatch(validateRequired(true));
-      }else{
-        store.dispatch(isQuestionRequired(false))
+      } else {
+        store.dispatch(isQuestionRequired(false));
+        store.dispatch(validateRequired(false));
       }
-    }else{
+    } else {
       store.dispatch(validateRequired(false));
     }
-    
-  }, [currentIndex,viewType]);
+  }, [currentIndex, viewType]);
 
   // useEffect(() => {
   //   console.log('required');
@@ -98,8 +95,6 @@ const App = ({ options, disableFlag }) => {
   //     store.dispatch(isQuestionRequired(false))
   //   }
   // },[])
-
-  
 
   //Controls back button
   const backQuestion = () => {
@@ -113,29 +108,25 @@ const App = ({ options, disableFlag }) => {
 
   //Controls next button
   const nextQuestion = () => {
-    if(viewType === 1){
-      if (currentIndex < surveyLength - 1){
+    if (viewType === 1) {
+      if (currentIndex < surveyLength - 1) {
         //İleri tuşuna basılması ile mevcut sorunun gerekli olup olmadığı sorgulanıyor.
-        if(currentQuestion.isRequired){
-          store.dispatch(isQuestionRequired(true))
-        }else{
-          store.dispatch(isQuestionRequired(false))
+        if (currentQuestion.isRequired) {
+          store.dispatch(isQuestionRequired(true));
+        } else {
+          store.dispatch(isQuestionRequired(false));
         }
         setBackButtonVisibled(true);
-        setCurrentIndex(currentIndex + 1)
-
-      }else{
+        setCurrentIndex(currentIndex + 1);
+      } else {
         setViewType(2);
         setBackButtonVisibled(false);
         setNextButtonVisibled(false);
       }
-
-    }else {
+    } else {
       setViewType(1);
     }
   };
-  
- 
 
   return (
     <Container className="App">
@@ -146,13 +137,12 @@ const App = ({ options, disableFlag }) => {
       </Row>
 
       <Row className="App__question">
-        <Col >
+        <Col>
           {viewType === 0 && <WelcomeView welcomeText={survey.WelcomeText} />}
-          
-            {viewType === 1 && (
-              <QuestionView id={currentIndex} question={currentQuestion} />
-            )}
-         
+
+          {viewType === 1 && (
+            <QuestionView id={currentIndex} question={currentQuestion} />
+          )}
 
           {viewType === 2 && (
             <FarewellView farewellText={survey.FareWellText} />
@@ -226,7 +216,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps,{validateRequired,isQuestionRequired})(App);
+export default connect(mapStateToProps, {
+  validateRequired,
+  isQuestionRequired,
+})(App);
 
 //The function you pass the hook cannot be an async function,
 //useState hook is also asynchronous, and will not be reflected immediately.
@@ -275,7 +268,6 @@ export default connect(mapStateToProps,{validateRequired,isQuestionRequired})(Ap
 //       console.log('e')
 //       setViewType(1);
 //     }
-
 
 //İlk soru zorunlu ise uygulanacak.
 // useEffect(() => {

@@ -1,6 +1,6 @@
 export  const findIndex = (arr, item) => {
     for (let i = 0; i < arr.length; i++) {
-      if (arr[i].ID === item.ID) {
+      if (arr[i].Value === item.Value) {
         return i;
       }
     }

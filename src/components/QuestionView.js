@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useEffect} from "react";
 import { Row, Col, Form } from "react-bootstrap";
 
 import Answer from "../models/Answer";
@@ -12,19 +12,21 @@ import { findIndex, deleteItem } from "../utils";
 const QuestionView = ({ id, question, isRequired }) => {
   const [answers, setAnswers] = useState([]);
 
+  useEffect(() => {
+    setAnswers([]);
+  },[question])
+
   const checkAnswerRadio = (e) => {
-    console.log('a');
     store.dispatch(validateRequired(false));
 
     //Alınan değer ile yeni answer oluşturuldu.
     const { name, value, id } = e.target;
-    let item = { ID: `${name}${value}`, Value: value, Text: id };
+    let item = {QuestionType:"MultiSingle", ID: `${name}`, Value: value, Text: id };
     let answer = new Answer(item);
-    let list = [...answers, answer];
-    setAnswers(list);
+    console.log(answer);
+    let list = answer;
     //state ile sorguluyoruz.
     if (isRequired) {
-      console.log('b');
       if (list.length === 0) {
         //Geçişi engeliyoruz cevap yoksa.
         store.dispatch(validateRequired(true));
@@ -36,7 +38,6 @@ const QuestionView = ({ id, question, isRequired }) => {
       //Cevabı gönderiyoruz.
       store.dispatch(sendAnswers(list));
     }
-    console.log('c');
   };
 
   const checkAnswerBox = (e) => {
@@ -46,13 +47,11 @@ const QuestionView = ({ id, question, isRequired }) => {
     //Alınan değerler ile cevap oluşturuldu.
     let isChecked = e.target.checked;
     const { name, value, id } = e.target;
-    let item = { ID: `${name}${value}`, Value: value, Text: id };
+    let item = {QuestionType:"MultiMulti", ID: `${name}`, Value: value, Text: id };
     let answer = new Answer(item);
-
     //Check edip edilmeme durumuna göre cevaplar güncelleniyor.
     if (isChecked) {
-      let newArr = [...answers];
-      newArr = [...answers, answer];
+      let newArr =  [...answers, answer];
       setAnswers(newArr);
 
       if (isRequired) {
@@ -65,26 +64,36 @@ const QuestionView = ({ id, question, isRequired }) => {
         }
       } else {
         //Cevabı gönderiyoruz.
-        store.dispatch(sendAnswers(newArr));
+        if(newArr.length !== 0){
+          store.dispatch(sendAnswers(newArr));
+        }
+        
       }
     } else {
       let index = findIndex(answers, answer);
-
+      console.log('Before Delete',answers)
       let newArr = deleteItem(answers, answers[index]);
-
-      setAnswers(newArr);
-
+      console.log('After Deleted',newArr)
+    
+      setAnswers(newArr); 
       if (isRequired) {
         if (newArr.length === 0) {
           //Geçişi engeliyoruz cevap yoksa.
           store.dispatch(validateRequired(true));
+          
         } else {
           //Cevabı gönderiyoruz.
+          console.log('After Deleted',newArr)
           store.dispatch(sendAnswers(newArr));
+      
         }
       } else {
         //Cevabı gönderiyoruz.
-        store.dispatch(sendAnswers(newArr));
+        if(newArr.length !== 0){
+          console.log('After Deleted',newArr)
+          store.dispatch(sendAnswers(newArr));
+      
+        }
       }
     }
   };
