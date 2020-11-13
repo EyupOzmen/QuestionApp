@@ -38,7 +38,7 @@
             "ID": 2,
             "QuestionType": "MULTIMULTI",
             "Question": "Sevdiğiniz spor dallarını seçiniz.",
-            "isRequired":true,
+            "isRequired":false,
             "Options": [
                 {
                     "ID": 1,
@@ -70,7 +70,7 @@
             "ID": 3,
             "QuestionType": "MULTIMULTI",
             "Question": "Gezdiğiniz illeri seçiniz.",
-            "isRequired":false,
+            "isRequired":true,
             "Options": [
                 {
                     "ID": 1,
@@ -102,7 +102,7 @@
             "ID": 4,
             "QuestionType": "MULTISINGLE",
             "Question": "İstanbul semti değildir?",
-            "isRequired":true,
+            "isRequired":false,
             "Options": [
                 {
                     "ID": 1,

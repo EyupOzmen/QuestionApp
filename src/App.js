@@ -45,18 +45,18 @@ const App = ({question, options, disableFlag }) => {
     const fetch = async () => {
     console.log("Ignite")
     await store.dispatch(fetchSurvey("TÜRKÇE"))
-    setSurvey(question)
+    //setSurvey(question)
     }
-    fetch()
+    fetch();
   },[])
 
   useEffect(() => {
     console.log('Survey Length',question)
     if(question){
-    setSurvey(question);
+    //setSurvey(question);
     //setSurveyLength(question.Questions.length)
     //setCurrentQuestion(question.Questions[0])
-    console.log('Data',survey)
+    console.log('Data',question)
     }
     
   }, [question]);
@@ -72,22 +72,23 @@ const App = ({question, options, disableFlag }) => {
   //Index değiştiğinde ilgili soruyu current soruya geçiyorum.
   /*1*/
   useEffect(() => {
-    if (survey.Questions) {
+    if (question.Questions) {
+      console.log('Survey Length')
       setSurveyLength(question.Questions.length)
-      setCurrentQuestion(question.Questions[0])
-      console.log("current",currentQuestion.isRequired);
-      setCurrentQuestion(survey.Questions[currentIndex]);
+      console.log("current",question.Questions[currentIndex].isRequired);
+      store.dispatch(validateRequired(question.Questions[currentIndex].isRequired))
+      setCurrentQuestion(question.Questions[currentIndex]);
     }
-  }, [isQuestionRequired, currentIndex,survey,setBackButtonVisibled,setCurrentIndex]);
+  }, [isQuestionRequired, currentIndex,question,setBackButtonVisibled,setCurrentIndex]);
 
    /*3*/
   useEffect(() => {
-    if (survey.Questions) {
-      setCurrentQuestion(survey.Questions[currentIndex]);
+    if (question.Questions) {
+      setCurrentQuestion(question.Questions[currentIndex]);
     }
     console.log('Required',currentQuestion.isRequired,currentIndex,viewType)
     if (currentIndex < surveyLength && viewType === 1) {
-      if (currentQuestion.isRequired) {
+      if (question.Questions[currentIndex].isRequired) {
         store.dispatch(isQuestionRequired(true));
        
       } else {
@@ -126,7 +127,7 @@ const App = ({question, options, disableFlag }) => {
     if (viewType === 1) {
       if (currentIndex < surveyLength - 1) {
         //İleri tuşuna basılması ile mevcut sorunun gerekli olup olmadığı sorgulanıyor.
-        if (currentQuestion.isRequired) {
+        if (question.Questions[currentIndex].isRequired) {
           store.dispatch(validateRequired(true));
         } else {
           store.dispatch(validateRequired(false));
@@ -148,20 +149,20 @@ const App = ({question, options, disableFlag }) => {
     <Container className="App">
       <Row>
         <Col>
-          <img className="Header_Logo" src={survey.HeaderLogo} alt="Header" />
+          <img className="Header_Logo" src={question.HeaderLogo} alt="Header" />
         </Col>
       </Row>
 
       <Row className="App__question">
         <Col>
-          {viewType === 0 && <WelcomeView welcomeText={survey.WelcomeText} />}
+          {viewType === 0 && <WelcomeView welcomeText={question.WelcomeText} />}
 
           {viewType === 1 && (
             <QuestionView id={currentIndex} question={currentQuestion} />
           )}
 
           {viewType === 2 && (
-            <FarewellView farewellText={survey.FareWellText} />
+            <FarewellView farewellText={question.FareWellText} />
           )}
         </Col>
       </Row>
@@ -217,7 +218,7 @@ const App = ({question, options, disableFlag }) => {
 
       <Row>
         <Col>
-          <img className="Footer_Logo" src={survey.FooterLogo} alt="Footer" />
+          <img className="Footer_Logo" src={question.FooterLogo} alt="Footer" />
         </Col>
       </Row>
     </Container>
@@ -225,7 +226,7 @@ const App = ({question, options, disableFlag }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.question);
+  console.log(state);
   return {
     question:state.question,
     options:state.answers,

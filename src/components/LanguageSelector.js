@@ -9,7 +9,7 @@ const LanguageSelector = () => {
 
   useEffect(() =>{
     console.log("Language Selector")
-    store.dispatch(fetchSurvey("TÜRKÇE"))
+    //store.dispatch(fetchSurvey("TÜRKÇE"))
   },[])
 
   const handleChange = (e) => {
