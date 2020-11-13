@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 
 import Answer from "../models/Answer";
@@ -12,16 +12,22 @@ import { findIndex, deleteItem } from "../utils";
 const QuestionView = ({ id, question, isRequired }) => {
   const [answers, setAnswers] = useState([]);
 
+  //Soru değiştiğinde checkbox cevapları için burada tutuyoruz.
   useEffect(() => {
     setAnswers([]);
-  },[question])
+  }, [question]);
 
   const checkAnswerRadio = (e) => {
     store.dispatch(validateRequired(false));
 
     //Alınan değer ile yeni answer oluşturuldu.
     const { name, value, id } = e.target;
-    let item = {QuestionType:"MultiSingle", ID: `${name}`, Value: value, Text: id };
+    let item = {
+      QuestionType: "MultiSingle",
+      ID: `${name}`,
+      Value: value,
+      Text: id,
+    };
     let answer = new Answer(item);
     console.log(answer);
     let list = answer;
@@ -35,23 +41,29 @@ const QuestionView = ({ id, question, isRequired }) => {
         store.dispatch(sendAnswers(list));
       }
     } else {
-      //Cevabı gönderiyoruz.
-      store.dispatch(sendAnswers(list));
+      //Cevabı gönderiyoruz.(Boşsa göndermemek için kontrol ediyoruz.)
+      if (list.length !== 0) {
+        store.dispatch(sendAnswers(list));
+      }
     }
   };
 
   const checkAnswerBox = (e) => {
-    
     store.dispatch(validateRequired(false));
 
     //Alınan değerler ile cevap oluşturuldu.
     let isChecked = e.target.checked;
     const { name, value, id } = e.target;
-    let item = {QuestionType:"MultiMulti", ID: `${name}`, Value: value, Text: id };
+    let item = {
+      QuestionType: "MultiMulti",
+      ID: `${name}`,
+      Value: value,
+      Text: id,
+    };
     let answer = new Answer(item);
     //Check edip edilmeme durumuna göre cevaplar güncelleniyor.
     if (isChecked) {
-      let newArr =  [...answers, answer];
+      let newArr = [...answers, answer];
       setAnswers(newArr);
 
       if (isRequired) {
@@ -64,35 +76,31 @@ const QuestionView = ({ id, question, isRequired }) => {
         }
       } else {
         //Cevabı gönderiyoruz.
-        if(newArr.length !== 0){
+        if (newArr.length !== 0) {
           store.dispatch(sendAnswers(newArr));
         }
-        
       }
     } else {
       let index = findIndex(answers, answer);
-      console.log('Before Delete',answers)
+      console.log("Before Delete", answers);
       let newArr = deleteItem(answers, answers[index]);
-      console.log('After Deleted',newArr)
-    
-      setAnswers(newArr); 
+      console.log("After Deleted", newArr);
+
+      setAnswers(newArr);
       if (isRequired) {
         if (newArr.length === 0) {
           //Geçişi engeliyoruz cevap yoksa.
           store.dispatch(validateRequired(true));
-          
         } else {
           //Cevabı gönderiyoruz.
-          console.log('After Deleted',newArr)
+          console.log("After Deleted", newArr);
           store.dispatch(sendAnswers(newArr));
-      
         }
       } else {
         //Cevabı gönderiyoruz.
-        if(newArr.length !== 0){
-          console.log('After Deleted',newArr)
+        if (newArr.length !== 0) {
+          console.log("After Deleted", newArr);
           store.dispatch(sendAnswers(newArr));
-      
         }
       }
     }

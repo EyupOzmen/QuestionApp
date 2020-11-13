@@ -5,16 +5,17 @@ import "./components/Survey.css";
 import Survey from "./models/Survey";
 import QuestionView from "./components/QuestionView";
 
-import SurveyJSONData from "./data/question.json";
+
 import WelcomeView from "./components/WelcomeView";
 import FarewellView from "./components/FarewellView";
 
-import { store } from "./store";
-import { validateRequired, isQuestionRequired } from "./actions";
-import { connect } from "react-redux";
-import { validation } from "./utils";
 
-const App = ({ options, disableFlag }) => {
+import { store } from "./store";
+import { fetchSurvey,validateRequired, isQuestionRequired } from "./actions";
+import { connect } from "react-redux";
+//import { validation } from "./utils";
+
+const App = ({question, options, disableFlag }) => {
   //survey uzunluğu
   const [surveyLength, setSurveyLength] = useState(0);
   //tüm anket
@@ -32,18 +33,33 @@ const App = ({ options, disableFlag }) => {
   //Cevap listesi
   const [answerList, setAnswerList] = useState([]);
   //Tıklanma sayacı
-  const [counter, setCounter] = useState(0);
+  //const [counter, setCounter] = useState(0);
   //Giriş ekranı
-  const [entrance, setEntrance] = useState(false);
+  //const [entrance, setEntrance] = useState(false);
   //Güncel cevap
-  const [currentAnswer, setCurrentAnswer] = useState([]);
+  //const [currentAnswer, setCurrentAnswer] = useState([]);
 
   //Dataları dışarıdan topluyoruz.
+   /*2*/
+  useEffect(()=>{
+    const fetch = async () => {
+    console.log("Ignite")
+    await store.dispatch(fetchSurvey("TÜRKÇE"))
+    setSurvey(question)
+    }
+    fetch()
+  },[])
+
   useEffect(() => {
-    let data = new Survey(SurveyJSONData);
-    setSurvey(data);
-    setSurveyLength(data.Questions.length);
-  }, []);
+    console.log('Survey Length',question)
+    if(question){
+    setSurvey(question);
+    //setSurveyLength(question.Questions.length)
+    //setCurrentQuestion(question.Questions[0])
+    console.log('Data',survey)
+    }
+    
+  }, [question]);
 
   //Option değiştiğinde cevap listesi oluşturuyoruz.
   useEffect(() => {
@@ -52,39 +68,38 @@ const App = ({ options, disableFlag }) => {
     setAnswerList([options]);
   }, [options]);
 
+
   //Index değiştiğinde ilgili soruyu current soruya geçiyorum.
+  /*1*/
   useEffect(() => {
     if (survey.Questions) {
-      console.log("current");
+      setSurveyLength(question.Questions.length)
+      setCurrentQuestion(question.Questions[0])
+      console.log("current",currentQuestion.isRequired);
       setCurrentQuestion(survey.Questions[currentIndex]);
     }
-  }, [survey]);
+  }, [isQuestionRequired, currentIndex,survey,setBackButtonVisibled,setCurrentIndex]);
 
-  // useEffect(() => {
-  //   console.log('currentQ');
-  //   if (survey.Questions) {
-
-  //     setCurrentQuestion(survey.Questions[currentIndex]);
-  //   }
-  // }, []);
-
+   /*3*/
   useEffect(() => {
     if (survey.Questions) {
       setCurrentQuestion(survey.Questions[currentIndex]);
     }
-    console.log(currentIndex);
+    console.log('Required',currentQuestion.isRequired,currentIndex,viewType)
     if (currentIndex < surveyLength && viewType === 1) {
       if (currentQuestion.isRequired) {
         store.dispatch(isQuestionRequired(true));
-        store.dispatch(validateRequired(true));
+       
       } else {
         store.dispatch(isQuestionRequired(false));
-        store.dispatch(validateRequired(false));
+       
       }
     } else {
       store.dispatch(validateRequired(false));
     }
-  }, [currentIndex, viewType]);
+  },[currentQuestion]);
+
+
 
   // useEffect(() => {
   //   console.log('required');
@@ -99,7 +114,7 @@ const App = ({ options, disableFlag }) => {
   //Controls back button
   const backQuestion = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+      setCurrentIndex(prev => prev - 1);
     } else {
       // Bu düğme görünmeyecek.
       setBackButtonVisibled(false);
@@ -112,12 +127,12 @@ const App = ({ options, disableFlag }) => {
       if (currentIndex < surveyLength - 1) {
         //İleri tuşuna basılması ile mevcut sorunun gerekli olup olmadığı sorgulanıyor.
         if (currentQuestion.isRequired) {
-          store.dispatch(isQuestionRequired(true));
+          store.dispatch(validateRequired(true));
         } else {
-          store.dispatch(isQuestionRequired(false));
+          store.dispatch(validateRequired(false));
         }
         setBackButtonVisibled(true);
-        setCurrentIndex(currentIndex + 1);
+        setCurrentIndex(prev => prev + 1);
       } else {
         setViewType(2);
         setBackButtonVisibled(false);
@@ -127,6 +142,7 @@ const App = ({ options, disableFlag }) => {
       setViewType(1);
     }
   };
+ 
 
   return (
     <Container className="App">
@@ -209,14 +225,16 @@ const App = ({ options, disableFlag }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  console.log(state.question);
   return {
-    options: state.answers,
+    question:state.question,
+    options:state.answers,
     disableFlag: state.disableRequired,
   };
 };
 
 export default connect(mapStateToProps, {
+  fetchSurvey,
   validateRequired,
   isQuestionRequired,
 })(App);

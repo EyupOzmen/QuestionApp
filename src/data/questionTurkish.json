@@ -1,0 +1,132 @@
+
+{
+    "HeaderLogo": "https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
+    "FooterLogo": "https://cloud4feed.com/index/wp-content/uploads/2016/03/c4f_logo.png",
+    "WelcomeText":"Hoş Geldiniz",
+    "FareWellText":"Güle Güle",
+    "Questions": [
+        {
+            "ID": 1,
+            "QuestionType": "MULTISINGLE",
+            "Question": "Hangi takımı tutuyorsunuz?",
+            "isRequired":false,
+            "Options": [
+                {
+                    "ID": 1,
+                    "Order": 1,
+                    "Text": "Fenerbahçe"
+                },
+                {
+                    "ID": 2,
+                    "Order": 2,
+                    "Text": "Galatasaray"
+                },
+                {
+                    "ID": 3,
+                    "Order": 3,
+                    "Text": "Beşiktaş"
+                },
+                {
+                    "ID": 4,
+                    "Order": 4,
+                    "Text": "Trabzonspor"
+                }
+            ]
+
+        },
+        {
+            "ID": 2,
+            "QuestionType": "MULTIMULTI",
+            "Question": "Sevdiğiniz spor dallarını seçiniz.",
+            "isRequired":true,
+            "Options": [
+                {
+                    "ID": 1,
+                    "Order": 1,
+                    "Text": "Futbol"
+                    
+                },
+                {
+                    "ID": 2,
+                    "Order": 2,
+                    "Text": "Basketbol"
+                    
+                },
+                {
+                    "ID": 3,
+                    "Order": 3,
+                    "Text": "Voleybol"
+                    
+                },
+                {
+                    "ID": 4,
+                    "Order": 4,
+                    "Text": "Hentbol"
+                    
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "QuestionType": "MULTIMULTI",
+            "Question": "Gezdiğiniz illeri seçiniz.",
+            "isRequired":false,
+            "Options": [
+                {
+                    "ID": 1,
+                    "Order": 1,
+                    "Text": "Tokat"
+                  
+                },
+                {
+                    "ID": 2,
+                    "Order": 2,
+                    "Text": "Mersin"
+                   
+                },
+                {
+                    "ID": 3,
+                    "Order": 3,
+                    "Text": "Adana"
+                    
+                },
+                {
+                    "ID": 4,
+                    "Order": 4,
+                    "Text": "İstanbul"
+                    
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "QuestionType": "MULTISINGLE",
+            "Question": "İstanbul semti değildir?",
+            "isRequired":true,
+            "Options": [
+                {
+                    "ID": 1,
+                    "Order": 1,
+                    "Text": "Eyüp"
+                },
+                {
+                    "ID": 2,
+                    "Order": 2,
+                    "Text": "Levent"
+                },
+                {
+                    "ID": 3,
+                    "Order": 3,
+                    "Text": "Fatih"
+                },
+                {
+                    "ID": 4,
+                    "Order": 4,
+                    "Text": "Mamak"
+                }
+            ]
+
+        }
+    
+    ]
+}

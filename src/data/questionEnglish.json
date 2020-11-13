@@ -2,14 +2,14 @@
 {
     "HeaderLogo": "https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
     "FooterLogo": "https://cloud4feed.com/index/wp-content/uploads/2016/03/c4f_logo.png",
-    "WelcomeText":"Hoş Geldiniz",
-    "FareWellText":"Güle Güle",
+    "WelcomeText":"Welcome",
+    "FareWellText":"Good Bye",
     "Questions": [
         {
             "ID": 1,
             "QuestionType": "MULTISINGLE",
-            "Question": "Hangi takımı tutuyorsunuz?",
-            "isRequired":true,
+            "Question": "Which team do you support?",
+            "isRequired":false,
             "Options": [
                 {
                     "ID": 1,
@@ -37,71 +37,71 @@
         {
             "ID": 2,
             "QuestionType": "MULTIMULTI",
-            "Question": "Sevdiğiniz spor dallarını seçiniz.",
+            "Question": "Choose sport branches which you like.",
             "isRequired":true,
             "Options": [
                 {
                     "ID": 1,
                     "Order": 1,
-                    "Text": "Futbol",
-                    "isChecked":false
+                    "Text": "Futbol"
+                    
                 },
                 {
                     "ID": 2,
                     "Order": 2,
-                    "Text": "Basketbol",
-                    "isChecked":false
+                    "Text": "Basketbol"
+                    
                 },
                 {
                     "ID": 3,
                     "Order": 3,
-                    "Text": "Voleybol",
-                    "isChecked":false
+                    "Text": "Voleybol"
+                    
                 },
                 {
                     "ID": 4,
                     "Order": 4,
-                    "Text": "Hentbol",
-                    "isChecked":false
+                    "Text": "Hentbol"
+                    
                 }
             ]
         },
         {
             "ID": 3,
             "QuestionType": "MULTIMULTI",
-            "Question": "Gezdiğiniz illeri seçiniz.",
-            "isRequired":true,
+            "Question": "Choose cities which you visited.",
+            "isRequired":false,
             "Options": [
                 {
                     "ID": 1,
                     "Order": 1,
-                    "Text": "Tokat",
-                    "isChecked":false
+                    "Text": "Tokat"
+                  
                 },
                 {
                     "ID": 2,
                     "Order": 2,
-                    "Text": "Mersin",
-                    "isChecked":false
+                    "Text": "Mersin"
+                   
                 },
                 {
                     "ID": 3,
                     "Order": 3,
-                    "Text": "Adana",
-                    "isChecked":false
+                    "Text": "Adana"
+                    
                 },
                 {
                     "ID": 4,
                     "Order": 4,
-                    "Text": "İstanbul",
-                    "isChecked":false
+                    "Text": "İstanbul"
+                    
                 }
             ]
         },
         {
             "ID": 4,
             "QuestionType": "MULTISINGLE",
-            "Question": "İstanbul semti değildir?",
+            "Question": "Which district below isn't in Istanbul?",
             "isRequired":true,
             "Options": [
                 {

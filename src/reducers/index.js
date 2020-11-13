@@ -33,6 +33,12 @@ export default (state = {}, action) => {
         isQRequired: action.payload,
       };
 
+    case "FETCH_SURVEY":
+      return {
+        ...state,
+        question:action.payload
+      }
+
     default:
       return state;
   }

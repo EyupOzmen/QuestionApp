@@ -51,6 +51,12 @@ h3{
   justify-content: center;
   align-items: center;
 }
+
+h6{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* .App__question:after {
   content: "";
   display: block;
